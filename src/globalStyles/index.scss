@@ -1,0 +1,60 @@
+// @import './variables';
+// @import './mixins';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; // Отключаем скролл для всей страницы
+}
+
+#root {
+  min-height: 100vh;
+}
+
+// Глобальные классы-утилиты
+.text-ellipsis {
+  @include text-ellipsis;
+}
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
+// Анимации
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+// Кастомный скроллбар для всего приложения
+html {
+  @include custom-scrollbar;
+}

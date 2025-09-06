@@ -1,0 +1,111 @@
+// Цвета
+$primary-color: #1890ff;
+$primary-color-hover: #40a9ff;
+$primary-color-active: #096dd9;
+
+$secondary-color: #52c41a;
+$secondary-color-hover: #73d13d;
+$secondary-color-active: #389e0d;
+
+$error-color: #f5222d;
+$warning-color: #faad14;
+$success-color: #52c41a;
+
+$text-color: #262626;
+$text-color-secondary: #8c8c8c;
+$text-color-disabled: #bfbfbf;
+
+$background-color: #f0f2f5;
+$background-color-light: #fafafa;
+$background-color-dark: #000d18;
+
+$border-color: #d9d9d9;
+$border-color-split: #f0f0f0;
+
+$favorite-color: #f5222d;
+$favorite-color-hover: #ff4d4f;
+
+:root {
+  // Цвета
+  --primary-blue: #1890ff;
+  --primary-blue-hover: #40a9ff;
+  --primary-blue-active: #096dd9;
+
+  --secondary-green: #52c41a;
+  --secondary-green-hover: #73d13d;
+  --secondary-green-active: #389e0d;
+
+  --background-gray: #f5f5f5;
+  --background-white: #05f4e0;
+  --border-light: #e8e8e8;
+  --text-dark: black;
+  --text-dark: black;
+  --text-light: #bfbfbf;
+
+  --favorite-red: #f5222d;
+  --favorite-red-hover: #ff4d4f;
+
+  // Размеры
+  --header-height: 60px;
+  --sider-width: 280px;
+  --border-radius: 4px;
+
+  // Тени
+  --shadow-light: 0 1px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  // Отступы
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+}
+
+// Размеры
+$header-height: 64px;
+$sider-width: 300px;
+$sider-width-collapsed: 80px;
+$border-radius-base: 6px;
+$border-radius-sm: 4px;
+
+// Тени
+$box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+$box-shadow-light: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+  0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+
+// Отступы
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-xxl: 48px;
+
+// Шрифты
+$font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif;
+$font-size-base: 14px;
+$font-size-lg: 16px;
+$font-size-sm: 12px;
+
+$line-height-base: 1.5715;
+$line-height-lg: 1.5;
+$line-height-sm: 1.6667;
+
+// Breakpoints
+$screen-xs: 480px;
+$screen-sm: 576px;
+$screen-md: 768px;
+$screen-lg: 992px;
+$screen-xl: 1200px;
+$screen-xxl: 1600px;
+
+// Z-index
+$zindex-dropdown: 1000;
+$zindex-sticky: 1020;
+$zindex-fixed: 1030;
+$zindex-modal: 1040;
+$zindex-notification: 1050;
+$zindex-tooltip: 1060;

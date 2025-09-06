@@ -1,0 +1,113 @@
+// @import './globalStyles/variables';
+// @import './globalStyles/mixins';
+
+.app {
+  height: 100vh;
+  background-color: $background-color;
+  
+  &-layout {
+    height: 100%;
+  }
+  
+  &-sider {
+    background-color: #fff;
+    border-right: 1px solid $border-color;
+    box-shadow: $box-shadow-light;
+    z-index: $zindex-sticky;
+    
+    @include respond-to(md) {
+      position: fixed !important;
+      left: 0;
+      top: $header-height;
+      height: calc(100% - #{$header-height}) !important;
+      z-index: $zindex-fixed;
+      transform: translateX(-100%);
+      @include transition-transform;
+      
+      &.ant-layout-sider-collapsed {
+        transform: translateX(0);
+      }
+    }
+  }
+  
+  &-content {
+    overflow-y: auto;
+    @include custom-scrollbar;
+    
+    @include respond-to(md) {
+      padding-left: 0 !important;
+    }
+  }
+  
+  // Мобильное меню overlay
+  &__mobile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    z-index: $zindex-modal - 1;
+    opacity: 0;
+    visibility: hidden;
+    @include transition-all;
+    
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    @include respond-to(lg) {
+      display: none;
+    }
+  }
+  
+  // Кнопка мобильного меню
+  &__mobile-toggle {
+    position: fixed;
+    bottom: $spacing-lg;
+    right: $spacing-lg;
+    z-index: $zindex-fixed;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: $primary-color;
+    color: white;
+    box-shadow: $box-shadow-base;
+    @include flex-center;
+    @include transition-all;
+    
+    &:hover {
+      background-color: $primary-color-hover;
+      transform: scale(1.05);
+    }
+    
+    &:active {
+      background-color: $primary-color-active;
+      transform: scale(0.95);
+    }
+    
+    @include respond-to(lg) {
+      display: none;
+    }
+  }
+}
+
+// Анимации для плавного появления
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms;
+}
