@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 
 export const Header: React.FC = () => {
   const { selectedNetwork } = useNetworksStore();
-  const { allStations, displayedStations, showOnlyFavorites, toggleShowFavorites } = useStationsStore();
+  const { displayedStations, showOnlyFavorites, toggleShowFavorites } = useStationsStore();
   const { favorites } = useFavoritesStore();
 
   const handleFavoritesClick = () => {
@@ -23,20 +23,17 @@ export const Header: React.FC = () => {
       <div className="app-header__content">
         <div className="app-header__left">
           <Title level={3} className="app-header__title">
-            CityBikes Explorer
+            CityBikes
           </Title>
           {selectedNetwork && (
-            <Text className="app-header__network">
-              {selectedNetwork.name}
-            </Text>
-          )}
-        </div>
-        
-        <div className="app-header__center">
-          {selectedNetwork && (
-            <Text className="app-header__stations">
-              Показано станций - {displayedStations.length} из {allStations.length} 
-            </Text>
+            <div className="app-header__network-info">
+              <Text className="app-header__network-name">
+                Network name: {selectedNetwork.name}
+              </Text>
+              <Text className="app-header__stations-count">
+                Stations amount: {displayedStations.length}
+              </Text>
+            </div>
           )}
         </div>
         
@@ -49,7 +46,7 @@ export const Header: React.FC = () => {
               onClick={handleFavoritesClick}
               className="app-header__favorites-btn"
             >
-              Избранные
+              Likes: {favorites.length}
               {showOnlyFavorites && <FilterFilled className="app-header__filter-icon" />}
             </Button>
           </Badge>

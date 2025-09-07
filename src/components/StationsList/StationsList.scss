@@ -5,192 +5,292 @@
   height: 100%;
   padding: var(--spacing-lg);
   background: var(--background-gray);
-
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  
   &__header {
     @include flex-between;
     margin-bottom: var(--spacing-lg);
-    align-items: center;
+    align-items: flex-start;
+    flex-shrink: 0;
   }
-
+  
+  &__title-section {
+    @include flex-column;
+    gap: var(--spacing-xs);
+  }
+  
   &__title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
+    margin: 0 !important;
     color: var(--text-dark);
-
-    @include flex-center;
-    gap: var(--spacing-sm);
+    font-weight: 600;
   }
-
+  
   &__favorites-count {
-    color: var(--favorite-red);
-    font-size: 14px;
-    font-weight: 500;
+    color: var(--text-gray);
+    font-size: 12px;
   }
-
+  
   &__reset-btn {
     background: var(--primary-blue);
     border-color: var(--primary-blue);
     color: white;
-
+    
     &:hover {
       background: var(--primary-blue-hover);
       border-color: var(--primary-blue-hover);
     }
   }
-
+  
   &__loading {
     @include flex-column-center;
-    height: 200px;
+    height: 100%;
     gap: var(--spacing-md);
   }
-
+  
   &__loading-text {
-    color: var(--text-dark);
+    color: var(--text-gray);
   }
-
+  
   &__error {
     padding: var(--spacing-lg);
+    height: 100%;
+    @include flex-center;
   }
-
+  
   &__empty {
     @include flex-center;
-    height: 200px;
+    height: 100%;
   }
-
+  
   &__infinite-container {
-    height: calc(100vh - 200px);
+    flex: 1;
     overflow: auto;
     @include custom-scrollbar;
-
+    
     .infinite-scroll-component {
       overflow: visible !important;
     }
   }
-
+  
   &__list {
     padding: 0;
+    margin: 0;
   }
-
+  
   &__item {
     margin-bottom: var(--spacing-md);
-
+    
     &:last-child {
       margin-bottom: 0;
     }
   }
-
+  
   &__loading-bottom {
     @include flex-center;
     padding: var(--spacing-lg) 0;
     gap: var(--spacing-sm);
   }
-
+  
   &__end {
     @include flex-center;
     padding: var(--spacing-lg) 0;
   }
-
+  
   &__end-text {
-    color: var(--text-dark);
+    color: var(--text-gray);
     font-size: 14px;
   }
-
+  
   @include respond-to(md) {
     padding: var(--spacing-md);
-
+    
     &__header {
       margin-bottom: var(--spacing-md);
     }
-
-    &__infinite-container {
-      height: calc(100vh - 180px);
-    }
   }
-
+  
   @include respond-to(sm) {
     padding: var(--spacing-sm);
-
+    
     &__title {
-      font-size: 16px;
+      font-size: 16px !important;
     }
-
+    
     &__reset-btn {
       span {
         display: none;
       }
     }
+  }
+}
 
-    &__infinite-container {
-      height: calc(100vh - 160px);
+// Детальная информация о станции
+.station-detail {
+  margin-bottom: var(--spacing-lg);
+  
+  &__card {
+    border-left: 4px solid var(--primary-blue);
+    box-shadow: var(--shadow-medium);
+    position: relative;
+  }
+  
+  &__content {
+    padding: var(--spacing-sm);
+  }
+  
+  &__header {
+    width: 100%;
+  }
+  
+  &__info-container {
+    flex: 1;
+  }
+  
+  &__icon {
+    color: var(--primary-blue);
+    font-size: 18px;
+    margin-top: 4px;
+  }
+  
+  &__name {
+    margin: 0 0 var(--spacing-md) 0 !important;
+    color: var(--text-dark);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  
+  &__info {
+    margin: 0 !important;
+  }
+  
+  &__stat {
+    @include flex-column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  &__stat-value {
+    font-size: 24px;
+    color: var(--primary-blue);
+    line-height: 1;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  &__stat-label {
+    font-size: 12px;
+  }
+  
+  &__close-btn {
+    color: var(--text-gray);
+    
+    &:hover {
+      color: var(--text-dark);
+      background-color: rgba(0, 0, 0, 0.04);
+    }
+  }
+  
+  @include respond-to(sm) {
+    margin-bottom: var(--spacing-md);
+    
+    &__stat-value {
+      font-size: 20px;
+    }
+    
+    &__close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    
+    &__header {
+      flex-direction: column;
+    }
+    
+    &__info-container {
+      width: 100%;
     }
   }
 }
 
+
+// Карточка станции
 .station-card {
   width: 100%;
   border-radius: var(--border-radius);
   border: 1px solid var(--border-light);
   box-shadow: var(--shadow-light);
   @include transition-all;
-
+  cursor: pointer;
+  position: relative;
+  
   &:hover {
     box-shadow: var(--shadow-medium);
     transform: translateY(-1px);
   }
-
+  
   &--favorite {
     border-left: 3px solid var(--favorite-red);
   }
-
+  
+  &--selected {
+    border-left: 4px solid var(--primary-blue);
+    background-color: rgba(var(--primary-blue), 0.05);
+    
+    &:hover {
+      background-color: rgba(var(--primary-blue), 0.08);
+    }
+  }
+  
   .ant-card-body {
     padding: var(--spacing-md);
-
+    
     @include respond-to(sm) {
       padding: var(--spacing-sm);
     }
   }
-
+  
   &__content {
     @include flex-between;
     gap: var(--spacing-md);
     align-items: flex-start;
   }
-
+  
   &__info {
     @include flex-column;
     gap: var(--spacing-sm);
     flex: 1;
     min-width: 0;
   }
-
+  
   &__name {
     color: var(--text-dark);
     font-size: 14px;
     line-height: 1.4;
     margin: 0;
-
+    
     @include text-ellipsis;
   }
-
+  
   &__details {
     @include flex-center;
     gap: var(--spacing-md);
   }
-
+  
   &__bikes,
   &__slots {
     font-size: 12px;
-    color: var(--text-dark);
+    color: var(--text-gray);
     @include flex-center;
     gap: var(--spacing-xs);
   }
-
+  
   &__bikes {
     color: var(--secondary-green);
     font-weight: 500;
   }
-
+  
   &__favorite {
     cursor: pointer;
     padding: var(--spacing-xs);
@@ -198,39 +298,39 @@
     @include flex-center;
     @include transition-all;
     flex-shrink: 0;
-
+    
     &:hover {
       background: rgba(var(--favorite-red), 0.1);
-
+      
       .station-card__favorite-icon {
         color: var(--favorite-red-hover);
       }
     }
-
+    
     &:active {
       transform: scale(0.9);
     }
   }
-
+  
   &__favorite-icon {
     font-size: 16px;
     color: var(--text-light);
     @include transition-color;
-
+    
     &--active {
       color: var(--favorite-red);
     }
   }
-
+  
   @include respond-to(sm) {
     &__content {
       gap: var(--spacing-sm);
     }
-
+    
     &__details {
       gap: var(--spacing-sm);
     }
-
+    
     &__favorite-icon {
       font-size: 14px;
     }

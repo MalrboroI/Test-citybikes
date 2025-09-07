@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { List, Card, Typography, Spin, Empty, Button, Alert } from 'antd';
-import { HeartOutlined, HeartFilled, ReloadOutlined } from '@ant-design/icons';
+import { List, Card, Typography, Spin, Empty, Button, Alert, Row, Col, Space  } from 'antd';
+import { HeartOutlined, HeartFilled, ReloadOutlined, EnvironmentOutlined, CloseOutlined  } from '@ant-design/icons';
 import { useNetworksStore } from '../../stores/useNetworksStore';
 import { useStationsStore } from '../../stores/useStationsStore';
+import { useFavoritesStore } from '../../stores/useFavoritesStore';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import './StationsList.scss';
-import { useFavoritesStore } from '../../stores/useFavoritesStore';
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 
 export const StationsList: React.FC = () => {
   const { selectedNetwork } = useNetworksStore();
@@ -19,22 +19,26 @@ export const StationsList: React.FC = () => {
     hasMore,
     loadMoreStations,
     resetPagination,
-    error
+    error,
+    selectedStation,
+    toggleStationSelection,
+    clearSelectedStation
   } = useStationsStore();
   const { favorites, toggleFavorite } = useFavoritesStore();
 
-  const [displayedItems, setDisplayedItems] = useState<number>(50);
+  const [displayedItems, setDisplayedItems] = useState<number>(20);
 
   useEffect(() => {
     if (showOnlyFavorites) {
-      // При переключении на избранное сбрасываем счетчик
-      setDisplayedItems(50);
+      setDisplayedItems(20);
     }
   }, [showOnlyFavorites]);
 
   const handleReset = () => {
     resetPagination();
-    setDisplayedItems(50);
+    setDisplayedItems(20);
+    setDisplayedItems(20);
+    clearSelectedStation();
   };
 
   const loadMoreData = () => {
@@ -42,7 +46,11 @@ export const StationsList: React.FC = () => {
       return;
     }
     loadMoreStations();
-    setDisplayedItems(prev => prev + 50);
+    setDisplayedItems(prev => prev + 20);
+  };
+
+  const handleStationClick = (station: any) => {
+    toggleStationSelection(station);
   };
 
   // Фильтруем станции если показываем только избранные
@@ -103,14 +111,16 @@ export const StationsList: React.FC = () => {
   return (
     <div className="stations-panel">
       <div className="stations-panel__header">
-        <h4 className="stations-panel__title">
-          {showOnlyFavorites ? 'Избранные станции' : `Станции в ${selectedNetwork.location.city}`}
+        <div className="stations-panel__title-section">
+          <Title level={4} className="stations-panel__title">
+            {showOnlyFavorites ? 'Избранные станции' : `Станции в ${selectedNetwork.location.city}`}
+          </Title>
           {showOnlyFavorites && (
-            <span className="stations-panel__favorites-count">
-              ({stationsToShow.length})
-            </span>
+            <Text className="stations-panel__favorites-count">
+              {stationsToShow.length} станций
+            </Text>
           )}
-        </h4>
+        </div>
         
         {showOnlyFavorites && (
           <Button
@@ -123,6 +133,56 @@ export const StationsList: React.FC = () => {
           </Button>
         )}
       </div>
+
+      {/* Информация о выбранной станции */}
+      {selectedStation && (
+        <div className="station-detail">
+          <Card className="station-detail__card">
+            <div className="station-detail__content">
+              <div className="station-detail__header">
+                <Space align="start" style={{ width: '100%' }}>
+                  <EnvironmentOutlined className="station-detail__icon" />
+                  <div className="station-detail__info-container">
+                    <Title level={5} className="station-detail__name">
+                      {selectedStation.name}
+                    </Title>
+                    <Row gutter={16} className="station-detail__info">
+                      <Col span={12}>
+                        <div className="station-detail__stat">
+                          <Text strong className="station-detail__stat-value">
+                            {selectedStation.free_bikes}
+                          </Text>
+                          <Text type="secondary" className="station-detail__stat-label">
+                            Доступно велосипедов
+                          </Text>
+                        </div>
+                      </Col>
+                      <Col span={12}>
+                        <div className="station-detail__stat">
+                          <Text strong className="station-detail__stat-value">
+                            {selectedStation.empty_slots}
+                          </Text>
+                          <Text type="secondary" className="station-detail__stat-label">
+                            Свободных мест
+                          </Text>
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                  <Button
+                    type="text"
+                    icon={<CloseOutlined />}
+                    size="small"
+                    onClick={clearSelectedStation}
+                    className="station-detail__close-btn"
+                  />
+                </Space>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
+
 
       <div
         id="scrollableDiv"
@@ -155,8 +215,9 @@ export const StationsList: React.FC = () => {
             renderItem={station => (
               <List.Item className="stations-panel__item">
                 <Card 
-                  className={`station-card ${favorites.includes(station.id) ? 'station-card--favorite' : ''}`}
+                  className={`station-card ${favorites.includes(station.id) ? 'station-card--favorite' : ''} ${selectedStation?.id === station.id ? 'station-card--selected' : ''}`}
                   size="small"
+                  onClick={() => handleStationClick(station)}
                 >
                   <div className="station-card__content">
                     <div className="station-card__info">
@@ -174,7 +235,10 @@ export const StationsList: React.FC = () => {
                     </div>
                     <div 
                       className="station-card__favorite"
-                      onClick={() => toggleFavorite(station.id)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleFavorite(station.id);
+                      }}
                     >
                       {favorites.includes(station.id) ? (
                         <HeartFilled className="station-card__favorite-icon station-card__favorite-icon--active" />

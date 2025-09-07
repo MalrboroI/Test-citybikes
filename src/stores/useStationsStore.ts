@@ -11,13 +11,15 @@ interface StationsState {
   currentPage: number;
   hasMore: boolean;
   pageSize: number;
+  selectedStation: Station | null;
   
   fetchStations: (networkId: string) => Promise<void>;
   fetchVelobikeMoscowStations: () => Promise<void>;
   toggleShowFavorites: () => void;
   loadMoreStations: () => void;
   resetPagination: () => void;
-  filterStations: (favorites: string[]) => void;
+  toggleStationSelection: (station: Station) => void;
+  clearSelectedStation: () => void;
 }
 
 export const useStationsStore = create<StationsState>((set, get) => ({
@@ -28,18 +30,19 @@ export const useStationsStore = create<StationsState>((set, get) => ({
   showOnlyFavorites: false,
   currentPage: 1,
   hasMore: true,
-  pageSize: 50,
+  pageSize: 20,
+  selectedStation: null,
   
   fetchStations: async (networkId: string) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true, error: null, selectedStation: null });
     try {
       const stations = await stationsService.getStationsByNetwork(networkId);
       set({ 
         allStations: stations,
-        displayedStations: stations.slice(0, 50),
+        displayedStations: stations.slice(0, 20),
         isLoading: false,
         currentPage: 1,
-        hasMore: stations.length > 50
+        hasMore: stations.length > 20
       });
     } catch (error) {
       set({ 
@@ -49,16 +52,16 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     }
   },
   
-    fetchVelobikeMoscowStations: async () => {
-    set({ isLoading: true, error: null });
+  fetchVelobikeMoscowStations: async () => {
+    set({ isLoading: true, error: null, selectedStation: null });
     try {
       const stations = await stationsService.getVelobikeMoscowStations();
       set({ 
         allStations: stations,
-        displayedStations: stations.slice(0, 50),
+        displayedStations: stations.slice(0, 20),
         isLoading: false,
         currentPage: 1,
-        hasMore: stations.length > 50
+        hasMore: stations.length > 20
       });
     } catch (error) {
       set({ 
@@ -68,9 +71,8 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     }
   },
   
-  
-toggleShowFavorites: () => {
-    set({ showOnlyFavorites: !get().showOnlyFavorites });
+  toggleShowFavorites: () => {
+    set({ showOnlyFavorites: !get().showOnlyFavorites, selectedStation: null });
   },
   
   loadMoreStations: () => {
@@ -101,11 +103,12 @@ toggleShowFavorites: () => {
       currentPage: 1,
       displayedStations: allStations.slice(0, pageSize),
       hasMore: allStations.length > pageSize,
-      showOnlyFavorites: false
+      showOnlyFavorites: false,
+      selectedStation: null
     });
   },
-  
-  filterStations: (favorites: string[]) => {
+
+    filterStations: (favorites: string[]) => {
     const { allStations, showOnlyFavorites, pageSize } = get();
     
     if (showOnlyFavorites) {
@@ -117,8 +120,21 @@ toggleShowFavorites: () => {
         currentPage: 1,
         hasMore: filteredStations.length > pageSize
       });
+    }},
+  
+  toggleStationSelection: (station: Station) => {
+    const { selectedStation } = get();
+    
+    // Если нажали на уже выбранную станцию - закрываем
+    if (selectedStation && selectedStation.id === station.id) {
+      set({ selectedStation: null });
     } else {
-      get().resetPagination();
+      // Иначе открываем новую станцию
+      set({ selectedStation: station });
     }
+  },
+  
+  clearSelectedStation: () => {
+    set({ selectedStation: null });
   }
 }));

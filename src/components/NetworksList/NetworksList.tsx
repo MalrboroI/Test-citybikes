@@ -74,7 +74,7 @@ export const NetworksList: React.FC = () => {
             <div className="networks-panel__item-content">
               <Text strong>{network.name}</Text>
               <Text type="secondary">
-                {network.location.city}, {network.location.country}
+                Сity:  {network.location.city}, <td>Country:  {network.location.country}</td> 
               </Text>
             </div>
           </List.Item>

@@ -54,7 +54,7 @@
     
     &--selected {
       background-color: rgba($primary-color, 0.08);
-      border-right: 3px solid $primary-color;
+      border-right: 3px solid #f63582;
       
       &:hover {
         background-color: rgba($primary-color, 0.12);
