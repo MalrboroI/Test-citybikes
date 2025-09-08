@@ -3,6 +3,10 @@ $primary-color: #1890ff;
 $primary-color-hover: #40a9ff;
 $primary-color-active: #096dd9;
 
+$primary-blue: #f63582;
+$primary-blue-hover: #40a9ff;
+$primary-blue-active: #1890ff;
+
 $secondary-color: #52c41a;
 $secondary-color-hover: #73d13d;
 $secondary-color-active: #389e0d;
@@ -12,6 +16,7 @@ $warning-color: #faad14;
 $success-color: #52c41a;
 
 $text-color: #262626;
+$text-color-name: #32a1b5;
 $text-color-secondary: #8c8c8c;
 $text-color-disabled: #bfbfbf;
 
@@ -25,42 +30,23 @@ $border-color-split: #f0f0f0;
 $favorite-color: #f5222d;
 $favorite-color-hover: #ff4d4f;
 
-:root {
-  // Цвета
-  --primary-blue: #f63582;
-  --primary-blue-hover: #40a9ff;
-  --primary-blue-active: #1890ff;
+$background-gray: #f5f5f5;
+$background-white: #05f4e0;
+$border-light: #e8e8e8;
+$text-dark: black;
+$text-light: #bfbfbf;
+$text-gray: gray;
 
-  --secondary-green: #52c41a;
-  --secondary-green-hover: #73d13d;
-  --secondary-green-active: #389e0d;
-
-  --background-gray: #f5f5f5;
-  --background-white: #05f4e0;
-  --border-light: #e8e8e8;
-  --text-dark: black;
-  --text-dark: black;
-  --text-light: #bfbfbf;
-
-  --favorite-red: #f5222d;
-  --favorite-red-hover: #ff4d4f;
-
-  // Размеры
-  --header-height: 60px;
-  --sider-width: 280px;
-  --border-radius: 4px;
+$favorite-red: #f5222d;
+$favorite-red-hover: #ff4d4f;
 
   // Тени
-  --shadow-light: 0 1px 4px rgba(0, 0, 0, 0.1);
-  --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
-
-  // Отступы
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-}
+$shadow-light: 0 1px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.15);
+$box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+$box-shadow-light: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
+  0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 
 // Размеры
 $header-height: 64px;
@@ -69,11 +55,6 @@ $sider-width-collapsed: 80px;
 $border-radius-base: 6px;
 $border-radius-sm: 4px;
 
-// Тени
-$box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
-  0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
-$box-shadow-light: 0 1px 2px 0 rgba(0, 0, 0, 0.03),
-  0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
 
 // Отступы
 $spacing-xs: 4px;
@@ -103,9 +84,9 @@ $screen-xl: 1200px;
 $screen-xxl: 1600px;
 
 // Z-index
-$zindex-dropdown: 1000;
-$zindex-sticky: 1020;
-$zindex-fixed: 1030;
-$zindex-modal: 1040;
-$zindex-notification: 1050;
-$zindex-tooltip: 1060;
+$zindex-dropdown: 5;
+$zindex-sticky: 6;
+$zindex-fixed: 7;
+$zindex-modal: 8;
+$zindex-notification: 9;
+$zindex-tooltip: 10;

@@ -37,6 +37,14 @@ export const NetworksList: React.FC = () => {
     await fetchVelobikeMoscowStations();
   };
 
+  const formatCompanies = (companies: any[]) => {
+    if (!companies || companies.length === 0) return 'Неизвестная компания';
+    
+    return companies
+      .map(company => company.name)
+      .join(', ');
+  };
+
   if (isLoading) {
     return (
       <div className="networks-panel__loading">
@@ -47,9 +55,9 @@ export const NetworksList: React.FC = () => {
 
   return (
     <div className="networks-panel">
-      <h4 className="networks-panel__title">Сети велопроката</h4>
+      <h4 className="networks-panel__title">Сетки велопроката</h4>
       
-      {/* Кнопка для быстрого доступа к Velobike Moscow */}
+      {/* Кнопка для быстрого доступа к московской сети */}
       <div className="networks-panel__quick-access">
         <Button 
           type="primary" 
@@ -57,7 +65,7 @@ export const NetworksList: React.FC = () => {
           onClick={handleVelobikeMoscowSelect}
           className="networks-panel__velobike-btn"
         >
-          Velobike Moscow
+          Велосипеды Москвы
         </Button>
       </div>
 
@@ -67,14 +75,15 @@ export const NetworksList: React.FC = () => {
         renderItem={network => (
           <List.Item
             className={`networks-panel__item ${
-              selectedNetwork?.id === network.id ? 'networks-panel__item--selected' : ''
+              selectedNetwork?.id === network.id ? 'networks-panel__item__selected' : ''
             }`}
             onClick={() => handleNetworkSelect(network.id)}
           >
             <div className="networks-panel__item-content">
-              <Text strong>{network.name}</Text>
               <Text type="secondary">
-                Сity:  {network.location.city}, <td>Country:  {network.location.country}</td> 
+              <span className='networks-panel__city'>Сity: </span>{network.location.city} <td/>
+              <span className='networks-panel__company'>Company: </span> {formatCompanies(network.company)} <td/>
+              <span className='networks-panel__name'>Network name: </span>{network.name} 
               </Text>
             </div>
           </List.Item>

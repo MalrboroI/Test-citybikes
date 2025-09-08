@@ -27,10 +27,13 @@ export interface Station {
   timestamp: string;
 }
 
+// Для запроса всех сетей
+export interface NetworksResponse {
+  networks: Network[];
+}
+
+// Для запроса конкретной сети
 export interface NetworkResponse {
   network: Network;
 }
 
-export interface NetworksResponse {
-  networks: Network[];
-}

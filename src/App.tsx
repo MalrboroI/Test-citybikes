@@ -11,13 +11,13 @@ import './App.scss';
 const { Sider, Content } = Layout;
 
 const App: React.FC = () => {
-  const { showOnlyFavorites, filterStations } = useStationsStore();
+  const { showOnlyFavorites, filterStationsByFavorites } = useStationsStore();
   const { favorites } = useFavoritesStore();
 
-  // Автоматически фильтруем станции при изменении избранного или режима показа
+  // Автоматически фильтруем станции при изменении избранного
   useEffect(() => {
-    filterStations(favorites);
-  }, [favorites, showOnlyFavorites, filterStations]);
+    filterStationsByFavorites(favorites);
+  }, [favorites, showOnlyFavorites, filterStationsByFavorites]);
 
   return (
     <ConfigProvider locale={ruRU}>
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Layout className="app-layout">
           <Header />
           <Layout>
-            <Sider width={280} className="app-sider">
+            <Sider width={440} className="app-sider">
               <NetworksList />
             </Sider>
             <Content className="app-content">
@@ -39,39 +39,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-// import './App.css'
-
-// function App() {
-//   const [count, setCount] = useState(0)
-
-//   return (
-//     <>
-//       <div>
-//         <a href="https://vite.dev" target="_blank">
-//           <img src={viteLogo} className="logo" alt="Vite logo" />
-//         </a>
-//         <a href="https://react.dev" target="_blank">
-//           <img src={reactLogo} className="logo react" alt="React logo" />
-//         </a>
-//       </div>
-//       <h1>Vite + React</h1>
-//       <div className="card">
-//         <button onClick={() => setCount((count) => count + 1)}>
-//           count is {count}
-//         </button>
-//         <p>
-//           Edit <code>src/App.tsx</code> and save to test HMR
-//         </p>
-//       </div>
-//       <p className="read-the-docs">
-//         Click on the Vite and React logos to learn more
-//       </p>
-//     </>
-//   )
-// }
-
-// export default App

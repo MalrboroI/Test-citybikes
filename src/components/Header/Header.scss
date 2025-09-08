@@ -1,12 +1,9 @@
-// @import '../../globalStyles/variables';
-// @import '../../globalStyles/mixins';
-
 .app-header {
-  height: var(--header-height);
-  padding: 0 var(--spacing-lg);
-  background: var(--background-white);
-  border-bottom: 1px solid var(--border-light);
-  box-shadow: var(--shadow-light);
+  height: $header-height;
+  padding: 0 $spacing-lg;
+  background: $background-white;
+  border-bottom: 1px solid $border-light;
+  box-shadow: $shadow-light;
 
   &__content {
     @include flex-between;
@@ -16,26 +13,38 @@
 
   &__left {
     @include flex-center;
-    gap: var(--spacing-md);
+    gap: $spacing-md;
   }
 
   &__center {
     @include flex-center;
   }
 
+  &__network-name {
+    margin-right: 16px;
+  }
+
   &__right {
     @include flex-center;
   }
 
+  &__name {
+    color: #32a1b5;
+  }
+
+  &__length {
+    color: green;
+  }
+
   &__title {
     margin: 0;
-    color: var(--primary-blue);
+    color: $primary-blue;
     font-weight: 600;
     font-size: 18px;
   }
 
   &__network {
-    color: var(--text-dark);
+    color: $text-dark;
     font-size: 14px;
     font-weight: 500;
 
@@ -44,33 +53,41 @@
   }
 
   &__stations {
-    color: var(--text-dark);
+    color: $text-dark;
     font-size: 14px;
   }
 
   &__badge {
     .ant-badge-count {
-      background: var(--favorite-red);
-      box-shadow: 0 0 0 1px var(--background-white);
+      background: $favorite-red;
+      box-shadow: 0 0 0 1px $background-white;
     }
   }
 
   &__favorites-btn {
     @include flex-center;
-    gap: var(--spacing-xs);
+    gap: $spacing-xs;
 
     .anticon {
       font-size: 14px;
     }
   }
 
+  &__icon {
+    color: $favorite-red;
+  }
+
+  &__like {
+    color: $primary-blue;
+  }
+
   &__filter-icon {
-    color: var(--secondary-green);
-    margin-left: var(--spacing-xs);
+    color: $background-white;
+    margin-left: $spacing-xs;
   }
 
   @include respond-to(md) {
-    padding: 0 var(--spacing-md);
+    padding: 0 $spacing-md;
 
     &__network {
       max-width: 150px;
@@ -84,10 +101,10 @@
   }
 
   @include respond-to(sm) {
-    padding: 0 var(--spacing-sm);
+    padding: 0 $spacing-sm;
 
     &__left {
-      gap: var(--spacing-sm);
+      gap: $spacing-sm;
     }
 
     &__title {

@@ -1,10 +1,7 @@
-// @import '../../globalStyles/variables';
-// @import '../../globalStyles/mixins';
-
 .networks-panel {
   height: 100%;
   background-color: #fff;
-  
+
   &__title {
     padding: $spacing-md;
     margin: 0;
@@ -13,73 +10,89 @@
     border-bottom: 1px solid $border-color-split;
     background-color: $background-color-light;
     color: $text-color;
-    
+
     @include respond-to(md) {
       padding: $spacing-sm $spacing-md;
       font-size: $font-size-base;
     }
   }
-  
+
   &__loading {
     @include flex-center;
     height: 200px;
   }
-  
+
   &__list {
     padding: 0;
     height: calc(100% - 57px); // Высота заголовка
     overflow-y: auto;
-    
+
     @include custom-scrollbar;
-    
+
     @include respond-to(md) {
       height: calc(100% - 49px);
     }
   }
-  
+
   &__item {
     padding: $spacing-md;
     border-bottom: 1px solid $border-color-split;
-    margin-left: 16px;
+    margin-left: 8px;
+    border-radius: 12px;
     cursor: pointer;
     @include transition-all;
-    
+
     &:hover {
       background-color: rgba($primary-color, 0.05);
     }
-    
+
     &:active {
       background-color: rgba($primary-color, 0.1);
     }
-    
-    &--selected {
+
+    &__selected {
       background-color: rgba($primary-color, 0.08);
-      border-right: 3px solid #f63582;
-      
+      border-left: 12px solid #f63582;
+
       &:hover {
         background-color: rgba($primary-color, 0.12);
       }
     }
-    
+
     &-content {
       @include flex-column;
       gap: $spacing-xs;
     }
-    
+
     @include respond-to(md) {
       padding: $spacing-sm $spacing-md;
     }
   }
-  
-  // Адаптивность
+
+  &__item-content {
+    margin-left: 6px;
+  }
+
+  &__city {
+    color: $primary-blue;
+  }
+
+  &__company {
+    color: #96e5f1;
+  }
+
+  &__name {
+    color: #99df63;
+  }
+
+  // Адаптив
   @include respond-to(md) {
     .ant-list-item {
       padding: $spacing-sm;
-      
     }
   }
 
-   &__quick-access {
+  &__quick-access {
     padding: $spacing-md;
     border-bottom: 1px solid $border-color-split;
     background-color: $background-color-light;
@@ -87,11 +100,12 @@
 
   &__velobike-btn {
     width: 100%;
-    background-color: $primary-color;
-    border-color: $primary-color;
-    
+    color: $text-color;
+    background-color: $background-white;
+    border-color: $background-white;
+
     &:hover {
-      background-color: $primary-color-hover;
+      background-color: $background-white;
       border-color: $primary-color-hover;
     }
   }

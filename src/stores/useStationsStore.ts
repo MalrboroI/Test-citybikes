@@ -12,7 +12,7 @@ interface StationsState {
   hasMore: boolean;
   pageSize: number;
   selectedStation: Station | null;
-  
+  // Фун-и
   fetchStations: (networkId: string) => Promise<void>;
   fetchVelobikeMoscowStations: () => Promise<void>;
   toggleShowFavorites: () => void;
@@ -20,6 +20,7 @@ interface StationsState {
   resetPagination: () => void;
   toggleStationSelection: (station: Station) => void;
   clearSelectedStation: () => void;
+  filterStationsByFavorites: (favorites: string[]) => void;
 }
 
 export const useStationsStore = create<StationsState>((set, get) => ({
@@ -108,7 +109,7 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     });
   },
 
-    filterStations: (favorites: string[]) => {
+    filterStationsByFavorites: (favorites: string[]) => {
     const { allStations, showOnlyFavorites, pageSize } = get();
     
     if (showOnlyFavorites) {
@@ -125,11 +126,11 @@ export const useStationsStore = create<StationsState>((set, get) => ({
   toggleStationSelection: (station: Station) => {
     const { selectedStation } = get();
     
-    // Если нажали на уже выбранную станцию - закрываем
+    // Если нажата на уже выбранную станцию - закрываем
     if (selectedStation && selectedStation.id === station.id) {
       set({ selectedStation: null });
     } else {
-      // Иначе открываем новую станцию
+      // Иначе открываем новую
       set({ selectedStation: station });
     }
   },
