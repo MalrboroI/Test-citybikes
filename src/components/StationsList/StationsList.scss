@@ -123,6 +123,10 @@
   }
 }
 
+.ant-list .ant-list-item{
+    padding: 0;
+}
+
 // Детальная информация о станции
 .station-detail {
   margin-bottom: $spacing-lg;
@@ -338,4 +342,8 @@
       font-size: 14px;
     }
   }
+}
+
+.station-detail__card{
+    margin-bottom: 20px;
 }

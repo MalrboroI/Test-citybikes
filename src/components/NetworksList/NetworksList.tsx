@@ -2,9 +2,11 @@ import React from 'react';
 import { List, Typography, Spin, Button } from 'antd';
 import { useNetworksStore } from '../../stores/useNetworksStore';
 import { useStationsStore } from '../../stores/useStationsStore';
+import {type Company} from '../../globalTypes/index';
 import './NetworksList.scss';
 
 const { Text } = Typography;
+const { Item } = List;
 
 export const NetworksList: React.FC = () => {
   const { networks, selectedNetwork, isLoading, fetchNetworks, selectNetwork, setSelectedNetwork } = useNetworksStore();
@@ -37,11 +39,12 @@ export const NetworksList: React.FC = () => {
     await fetchVelobikeMoscowStations();
   };
 
-  const formatCompanies = (companies: any[]) => {
+  // Так как это массив, сделал итерацию по нему (иначе ошибка ReactNode)
+  const formatCompanies = (companies: Company[]) => {
     if (!companies || companies.length === 0) return 'Неизвестная компания';
     
     return companies
-      .map(company => company.name)
+      .map(company => company)
       .join(', ');
   };
 
@@ -73,7 +76,7 @@ export const NetworksList: React.FC = () => {
         className="networks-panel__list"
         dataSource={networks}
         renderItem={network => (
-          <List.Item
+          <Item
             className={`networks-panel__item ${
               selectedNetwork?.id === network.id ? 'networks-panel__item__selected' : ''
             }`}
@@ -81,12 +84,12 @@ export const NetworksList: React.FC = () => {
           >
             <div className="networks-panel__item-content">
               <Text type="secondary">
-              <span className='networks-panel__city'>Сity: </span>{network.location.city} <td/>
-              <span className='networks-panel__company'>Company: </span> {formatCompanies(network.company)} <td/>
+              <span className='networks-panel__city'>Сity: </span>{network.location.city}<br/>
+              <span className='networks-panel__company'>Company: </span> {formatCompanies(network.company)}<br/>
               <span className='networks-panel__name'>Network name: </span>{network.name} 
               </Text>
             </div>
-          </List.Item>
+          </Item>
         )}
       />
     </div>

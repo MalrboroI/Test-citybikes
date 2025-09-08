@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { favoritesService } from '../services/storage/favoritesService';
+import { favoritesService } from '../services/utils/favoritesService';
 
 interface FavoritesState {
   favorites: string[];
