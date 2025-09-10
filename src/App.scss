@@ -13,10 +13,10 @@
     z-index: $zindex-sticky;
     
     @include respond-to(md) {
-      position: fixed !important;
+      position: fixed;
       left: 0;
       top: $header-height;
-      height: calc(100% - #{$header-height}) !important;
+      height: calc(100% - #{$header-height}) ;
       z-index: $zindex-fixed;
       transform: translateX(-100%);
       @include transition-transform;
@@ -32,7 +32,7 @@
     @include custom-scrollbar;
     
     @include respond-to(md) {
-      padding-left: 0 !important;
+      padding-left: 0;
     }
   }
   

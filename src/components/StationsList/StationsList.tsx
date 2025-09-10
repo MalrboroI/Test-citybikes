@@ -154,15 +154,24 @@ export const StationsList: React.FC = () => {
 
       {/* Информация о выбранной станции */}
       {selectedStation && (
-              <Card className="station-detail__card">
-                <Space align="start">
-                  <EnvironmentOutlined className="station-detail__icon" />
-                  <div className="station-detail__info-container">
-                    <Title level={5} className="station-detail__name">
-                      {selectedStation.name}
-                    </Title>
-                    <Row gutter={16} className="station-detail__info">
-                      <Col span={12}>
+                <div className="station-detail">
+                  <Card className="station-detail__card">
+                    <div className="station-detail__content">
+                      <div className="station-detail__header">
+                        <EnvironmentOutlined className="station-detail__icon" />
+                        <Title level={5} className="station-detail__name">
+                          {selectedStation.name}
+                        </Title>
+                        <Button
+                          type="text"
+                          icon={<CloseOutlined />}
+                          size="small"
+                          onClick={clearSelectedStation}
+                          className="station-detail__close-btn"
+                        />
+                      </div>
+                      
+                      <div className="station-detail__info">
                         <div className="station-detail__stat">
                           <Text strong className="station-detail__stat-value">
                             {selectedStation.free_bikes}
@@ -171,8 +180,7 @@ export const StationsList: React.FC = () => {
                             Доступно велосипедов
                           </Text>
                         </div>
-                      </Col>
-                      <Col span={12}>
+                        
                         <div className="station-detail__stat">
                           <Text strong className="station-detail__stat-value">
                             {selectedStation.empty_slots}
@@ -181,19 +189,11 @@ export const StationsList: React.FC = () => {
                             Свободных мест
                           </Text>
                         </div>
-                      </Col>
-                    </Row>
-                  </div>
-                  <Button
-                    type="text"
-                    icon={<CloseOutlined />}
-                    size="small"
-                    onClick={clearSelectedStation}
-                    className="station-detail__close-btn"
-                  />
-                </Space>
-              </Card>
-            )}
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+              )}
 
       <div id="scrollableDiv" className="stations-panel__infinite-container">
         <InfiniteScroll

@@ -129,85 +129,112 @@
 
 // Детальная информация о станции
 .station-detail {
-  margin-bottom: $spacing-lg;
-
+  
   &__card {
     border-left: 4px solid $primary-blue;
     box-shadow: $shadow-medium;
-    position: relative;
   }
-
-  &__content {
-    padding: $spacing-sm;
-  }
-
+  
   &__header {
-    width: 100%;
+    @include flex-between;
+    align-items: flex-start;
+    margin-bottom: &spacing-md;
+    gap: $spacing-sm;
   }
-
-  &__info-container {
-    flex: 1;
-  }
-
+  
   &__icon {
     color: $primary-blue;
-    font-size: 18px;
-    margin-top: 4px;
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
   }
-
+  
   &__name {
-    margin: 0 0 $spacing-md 0;
+    margin: 0;
+    margin-bottom: 18px;
     color: $text-dark;
     font-weight: 600;
     line-height: 1.4;
-  }
-
-  &__info {
-    margin: 0;
-  }
-
-  &__stat {
-    @include flex-column;
-    align-items: center;
+    flex: 1;
     text-align: center;
   }
-
-  &__stat-value {
-    font-size: 24px;
-    color: $primary-blue;
-    line-height: 1;
-    margin-bottom: $spacing-xs;
-  }
-
-  &__stat-label {
-    font-size: 12px;
-  }
-
+  
   &__close-btn {
     color: $text-gray;
-    position: absolute;
-    top: 8px;
-    right: 8px;
-
+    flex-shrink: 0;
+    
     &:hover {
       color: $text-dark;
       background-color: rgba(0, 0, 0, 0.04);
     }
   }
-
+  
+  &__info {
+    @include flex-center;
+    gap: $spacing-xl;
+    margin: 0 auto;
+    max-width: 300px;
+  }
+  
+  &__stat {
+    @include flex-column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+  }
+  
+  &__stat-value {
+    font-size: 28px;
+    color: $primary-blue;
+    line-height: 1;
+    margin-bottom: $spacing-xs;
+    font-weight: 700;
+  }
+  
+  &__stat-label {
+    font-size: 13px;
+    line-height: 1.2;
+  }
+  
   @include respond-to(sm) {
     margin-bottom: $spacing-md;
-
-    &__stat-value {
-      font-size: 20px;
+    
+    &__content {
+      padding: $spacing-sm;
     }
-
+    
     &__header {
-      flex-direction: column;
+      margin-bottom: $spacing-sm;
     }
-
-    &__info-container {
-      width: 100%;
+    
+    &__info {
+      gap:$spacing-lg;
+      max-width: 250px;
+    }
+    
+    &__stat-value {
+      font-size: 24px;
+    }
+    
+    &__stat-label {
+      font-size: 12px;
+    }
+    
+    &__close-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+  }
+  
+  @include respond-to(xs) {
+    &__info {
+      gap: $spacing-md;
+      max-width: 220px;
+    }
+    
+    &__stat-value {
+      font-size: 22px;
     }
   }
 }
@@ -217,7 +244,6 @@
   width: 100%;
   border: 1px solid $border-light;
   border-radius: 12px;
-  // border-left: 3px solid $favorite-red;
 
   box-shadow: $shadow-light;
   @include transition-all;
@@ -298,7 +324,7 @@
 
   &__bike,
   &__slot {
-    color: $background-white;
+    color: $primary-blue;
   }
 
   &__favorite {
