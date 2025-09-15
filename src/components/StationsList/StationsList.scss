@@ -132,13 +132,13 @@
   
   &__card {
     border-left: 4px solid $primary-blue;
+    border-right: 4px solid $primary-blue;
     box-shadow: $shadow-medium;
   }
   
   &__header {
     @include flex-between;
     align-items: flex-start;
-    margin-bottom: &spacing-md;
     gap: $spacing-sm;
   }
   
@@ -171,7 +171,7 @@
   
   &__info {
     @include flex-center;
-    gap: $spacing-xl;
+    gap: 108px;
     margin: 0 auto;
     max-width: 300px;
   }

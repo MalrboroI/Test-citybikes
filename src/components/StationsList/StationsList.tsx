@@ -7,9 +7,6 @@ import {
   Empty,
   Button,
   Alert,
-  Row,
-  Col,
-  Space,
 } from "antd";
 import {
   HeartOutlined,
@@ -40,6 +37,7 @@ export const StationsList: React.FC = () => {
     selectedStation,
     toggleStationSelection,
     clearSelectedStation,
+    allNetworksStations,
   } = useStationsStore();
   const { favorites, toggleFavorite } = useFavoritesStore();
 
@@ -69,13 +67,13 @@ export const StationsList: React.FC = () => {
 
   // Фильтруем станции если показываем только избранные
   const stationsToShow = showOnlyFavorites
-    ? allStations
+    ? allNetworksStations
         .filter(station => favorites.includes(station.id))
         .slice(0, displayedItems)
     : displayedStations;
 
   const hasMoreToLoad = showOnlyFavorites
-    ? displayedItems < allStations.filter(station => favorites.includes(station.id)).length
+    ? displayedItems < allNetworksStations.filter(station => favorites.includes(station.id)).length
     : hasMore;
 
   if (isLoading && stationsToShow.length === 0) {
@@ -156,8 +154,13 @@ export const StationsList: React.FC = () => {
       {selectedStation && (
                 <div className="station-detail">
                   <Card className="station-detail__card">
-                    <div className="station-detail__content">
+                    {/* <div className="station-detail__content"> */}
                       <div className="station-detail__header">
+                        {favorites.includes(selectedStation.id) ? (
+                          <HeartFilled className="station-detail__icon" />
+                        ) : (
+                          <HeartOutlined className="station-detail__icon" />
+                        )}
                         <EnvironmentOutlined className="station-detail__icon" />
                         <Title level={5} className="station-detail__name">
                           {selectedStation.name}
@@ -190,7 +193,7 @@ export const StationsList: React.FC = () => {
                           </Text>
                         </div>
                       </div>
-                    </div>
+                    {/* </div> */}
                   </Card>
                 </div>
               )}
@@ -242,8 +245,7 @@ export const StationsList: React.FC = () => {
                       onClick={e => {
                         e.stopPropagation();
                         toggleFavorite(station.id);
-                      }}
-                    >
+                      }}>
                       {favorites.includes(station.id) ? (
                         <HeartFilled className="station-card__favorite-icon station-card__favorite-icon__active" />
                       ) : (

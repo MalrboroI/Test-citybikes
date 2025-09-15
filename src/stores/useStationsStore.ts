@@ -12,6 +12,7 @@ interface StationsState {
   hasMore: boolean;
   pageSize: number;
   selectedStation: Station | null;
+  allNetworksStations: Station[];
   // Фун-и
   fetchStations: (networkId: string) => Promise<void>;
   fetchVelobikeMoscowStations: () => Promise<void>;
@@ -21,6 +22,7 @@ interface StationsState {
   toggleStationSelection: (station: Station) => void;
   clearSelectedStation: () => void;
   filterStationsByFavorites: (favorites: string[]) => void;
+  addStationsToAllNetworks: (stations: Station[]) => void;
 }
 
 export const useStationsStore = create<StationsState>((set, get) => ({
@@ -31,20 +33,22 @@ export const useStationsStore = create<StationsState>((set, get) => ({
   showOnlyFavorites: false,
   currentPage: 1,
   hasMore: true,
-  pageSize: 20,
+  pageSize: 50,
   selectedStation: null,
+  allNetworksStations: [],
   
   fetchStations: async (networkId: string) => {
     set({ isLoading: true, error: null, selectedStation: null });
     try {
       const stations = await stationsService.getStationsByNetwork(networkId);
-      set({ 
+      set(state => ({ 
         allStations: stations,
-        displayedStations: stations.slice(0, 20),
+        displayedStations: stations.slice(0, state.pageSize),
         isLoading: false,
         currentPage: 1,
-        hasMore: stations.length > 20
-      });
+        hasMore: stations.length > state.pageSize,
+        allNetworksStations: [...state.allNetworksStations, ...stations]
+      }));
     } catch (error) {
       set({ 
         error: error instanceof Error ? error.message : 'Неизвестная ошибка',
@@ -57,13 +61,14 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     set({ isLoading: true, error: null, selectedStation: null });
     try {
       const stations = await stationsService.getVelobikeMoscowStations();
-      set({ 
+      set(state => ({ 
         allStations: stations,
-        displayedStations: stations.slice(0, 20),
+        displayedStations: stations.slice(0, state.pageSize),
         isLoading: false,
         currentPage: 1,
-        hasMore: stations.length > 20
-      });
+        hasMore: stations.length > state.pageSize,
+        allNetworksStations: [...state.allNetworksStations, ...stations]
+      }));
     } catch (error) {
       set({ 
         error: error instanceof Error ? error.message : 'Неизвестная ошибка',
@@ -77,14 +82,16 @@ export const useStationsStore = create<StationsState>((set, get) => ({
   },
   
   loadMoreStations: () => {
-    const { allStations, currentPage, displayedStations, pageSize } = get();
+    const { allStations, currentPage, displayedStations, pageSize, showOnlyFavorites, allNetworksStations } = get();
     
     if (get().isLoading) return;
+    
+    const sourceStations = showOnlyFavorites ? allNetworksStations : allStations;
     
     const nextPage = currentPage + 1;
     const startIndex = currentPage * pageSize;
     const endIndex = nextPage * pageSize;
-    const newStations = allStations.slice(startIndex, endIndex);
+    const newStations = sourceStations.slice(startIndex, endIndex);
     
     if (newStations.length === 0) {
       set({ hasMore: false });
@@ -94,7 +101,7 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     set({
       displayedStations: [...displayedStations, ...newStations],
       currentPage: nextPage,
-      hasMore: endIndex < allStations.length
+      hasMore: endIndex < sourceStations.length
     });
   },
   
@@ -109,11 +116,11 @@ export const useStationsStore = create<StationsState>((set, get) => ({
     });
   },
 
-    filterStationsByFavorites: (favorites: string[]) => {
-    const { allStations, showOnlyFavorites, pageSize } = get();
+  filterStationsByFavorites: (favorites: string[]) => {
+    const { allNetworksStations, pageSize, showOnlyFavorites } = get();
     
     if (showOnlyFavorites) {
-      const filteredStations = allStations.filter(station => 
+      const filteredStations = allNetworksStations.filter(station => 
         favorites.includes(station.id)
       );
       set({
@@ -121,7 +128,14 @@ export const useStationsStore = create<StationsState>((set, get) => ({
         currentPage: 1,
         hasMore: filteredStations.length > pageSize
       });
-    }},
+    }
+  },
+  
+  addStationsToAllNetworks: (stations: Station[]) => {
+    set(state => ({
+      allNetworksStations: [...state.allNetworksStations, ...stations]
+    }));
+  },
   
   toggleStationSelection: (station: Station) => {
     const { selectedStation } = get();
